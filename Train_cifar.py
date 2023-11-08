@@ -19,7 +19,7 @@ parser = argparse.ArgumentParser(description='ITEM')
 parser.add_argument('--data_path', default='./cifar-10', type=str, help='path to dataset')
 parser.add_argument('--dataset', default='cifar10', type=str)
 parser.add_argument('--num_class', default=10, type=int)
-parser.add_argument('--noise_mode', default='sym', help='sym, pair, instance')
+parser.add_argument('--noise_mode', default='sym', help='sym, instance')
 parser.add_argument('--r', default=0.5, type=float, help='noise ratio')
 
 parser.add_argument('--batch_size', default=64, type=int, help='train batchsize')
