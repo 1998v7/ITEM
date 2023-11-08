@@ -37,36 +37,11 @@ def dataset_split(train_images, train_labels,  noise_rate=0.5, noise_type='sym',
         print('============ Transition matrix of Sym Noise ===========')
         print(transition_matrix)
         print('=======================================================')
-    elif noise_type == 'pair':
-        print('============ Transition matrix of Pair Noise ==========')
-        noisy_labels, real_noise_rate, transition_matrix = noisify_pairflip(clean_train_labels, noise=noise_rate, random_state=random_seed, nb_classes=num_classes)
-        print(transition_matrix)
-        print('=======================================================')
-        # print(transition_matrix)
+
     noisy_labels = noisy_labels.squeeze()
     return noisy_labels
 
 
-def noisify_pairflip(y_train, noise, random_state=1, nb_classes=10):
-    """mistakes:
-        flip in the pair
-    """
-    P = np.eye(nb_classes)
-    n = noise
-
-    if n > 0.0:
-        # 0 -> 1
-        P[0, 0], P[0, 1] = 1. - n, n
-        for i in range(1, nb_classes - 1):
-            P[i, i], P[i, i + 1] = 1. - n, n
-        P[nb_classes - 1, nb_classes - 1], P[nb_classes - 1, 0] = 1. - n, n
-
-        y_train_noisy = multiclass_noisify(y_train, P=P, random_state=random_state)
-        actual_noise = (y_train_noisy != y_train).mean()
-        assert actual_noise > 0.0
-        y_train = y_train_noisy
-
-    return y_train, actual_noise, P
 
 def get_instance_noisy_label(n, newdataset, labels, num_classes, feature_size, norm_std, seed):
     label_num = num_classes
